@@ -173,7 +173,7 @@ export default function Home() {
                 {/* charts  */}
                 <section className="py-6">
                     <h3 className="text-2xl">Stats</h3>
-                    <div className="w-1/2 h-1/2 mx-auto">
+                    <div className="h-1/2 mx-auto">
                         <Doughnut
                             data={{
                                 labels: DUMMY_DATA.map((category) => category.title),
