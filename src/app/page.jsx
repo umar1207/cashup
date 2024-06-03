@@ -6,16 +6,22 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Doughnut } from "react-chartjs-2"
 import { useState, useContext, useEffect } from "react"
 import { financeContext } from "@/lib/store/context"
+import { authContext } from "@/lib/store/authContext"
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 import AddIncomeMenu from "@/components/menus/AddIncomeMenu"
 import AddExpensesMenu from "@/components/menus/AddExpensesMenu"
 
+import SignIn from "@/components/SignIn"
+
 export default function Home() {
-    const [balance, setBalance] = useState(0)
     const [showAddIncomeMenu, setShowAddIncomeMenu] = useState(false)
     const [showAddExpensesMenu, setShowAddExpensesMenu] = useState(false)
-    const { income, expenses } = useContext(financeContext)
+    
+    const [balance, setBalance] = useState(0);
+
+    const { income, expenses } = useContext(financeContext);
+    const { user, loading } = useContext(authContext);
 
     useEffect(() => {
         const newBalance = income.reduce((total, i) => {
@@ -24,7 +30,11 @@ export default function Home() {
             return total + e.total
         }, 0)
         setBalance(newBalance)
-    }, [income, expenses])
+    }, [expenses, income]);
+
+    if(!user) {
+        return <SignIn />
+    }
     return (
         <>
             <AddIncomeMenu show={showAddIncomeMenu} onClose={setShowAddIncomeMenu} />
@@ -44,8 +54,8 @@ export default function Home() {
                 <section className="py-6">
                     <h3 className="text-2xl">My Expenses</h3>
                     <div className="flex flex-col gap-4 mt-6">
-                        {expenses.map((category) => (
-                            <ExpenseCategory expense={category} />
+                        {expenses.map((expense) => (
+                            <ExpenseCategory key={expense.id} expense={expense} />
                         ))}
                     </div>
                 </section>
@@ -56,7 +66,7 @@ export default function Home() {
                     <div className="h-1/2 mx-auto">
                         <Doughnut
                             data={{
-                                labels: expenses.map((category) => category.title),
+                                // labels: expenses.map((category) => category.title),
                                 datasets: [
                                     {
                                         label: "Expenses",

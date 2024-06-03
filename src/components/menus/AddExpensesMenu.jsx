@@ -1,6 +1,10 @@
+'use client'
+
 import Menu from '@/components/Menu'
+
 import { useState, useContext, useRef } from 'react';
 import { financeContext } from '@/lib/store/context';
+
 import { v4 as uuidv4 } from 'uuid';
 
 function AddExpensesMenu({ show, onClose }) {
@@ -78,42 +82,25 @@ function AddExpensesMenu({ show, onClose }) {
                     </div>
 
                     {showAddExpense && (
-                        <>
-                            <div className='hidden md:flex items-center justify-between'>
-                                <input type="text"
-                                    placeholder='Search for a category'
-                                    className="py-2 bg-slate-200 rounded-3xl"
-                                    ref={titleRef}
-                                />
-
-                                <label>Pick a Color</label>
-                                <input type="color" className="w-24 h-10 py-2 px-4" ref={colorRef} />
-                                <button onClick={addCategoryHandler} className='btn btn-primary-outline'>Create</button>
-                                <button onClick={() => {
-                                    setShowAddExpense(false)
-                                }} className='btn btn-danger'>Cancel</button>
-                            </div>
-                            <div className='md:hidden flex flex-col gap-4 p-4'>
-                                <div className='flex items-center justify-center gap-4'>
+                            <div className='flex flex-col gap-4'>
+                                <div className='flex flex-col gap-2'>
                                     <input type="text"
-                                        placeholder='Search for a category'
-                                        className="py-2 bg-slate-200 rounded-3xl"
+                                        placeholder='Make a new category'
+                                        className="py-2 bg-slate-200 rounded-3xl text-black text-center w-[200px] mx-auto"
                                         ref={titleRef}
                                     />
-                                    <div className='flex items-center gap-2'>
+                                    <div className='flex items-center justify-center gap-2'>
                                         <label>Pick Color</label>
                                         <input type="color" className="w-20 h-10 py-2 px-4" ref={colorRef} />
                                     </div>
                                 </div>
-                                <div className='flex gap-5 justify-center'>
+                                <div className='flex items-center gap-2 justify-center'>
                                     <button onClick={addCategoryHandler} className='btn btn-primary-outline'>Create</button>
                                     <button onClick={() => {
                                         setShowAddExpense(false)
                                     }} className='btn btn-danger'>Cancel</button>
                                 </div>
                             </div>
-
-                        </>
                     )}
                     {expenses.map((expense) => {
                         return (

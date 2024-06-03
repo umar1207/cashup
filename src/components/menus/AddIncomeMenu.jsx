@@ -1,7 +1,12 @@
+'use client'
+
 import { useRef, useContext } from "react"
 import { currencyFormatter } from "@/lib/utils"
+
 import Menu from "@/components/Menu"
+
 import { financeContext } from "@/lib/store/context"
+import { authContext } from "@/lib/store/authContext"
 
 import {FaRegTrashAlt} from 'react-icons/fa'
 
@@ -10,13 +15,16 @@ function AddIncomeMenu({ show, onClose}) {
     const descriptionRef = useRef()
     const { income, addIncomeItem, removeIncomeItem } = useContext(financeContext)
 
+    const { user } = useContext(authContext);
+
     const addIncomeHandler = async (e) => {
         e.preventDefault()
 
         const newIncome = {
             amount: +amountRef.current.value,
             description: descriptionRef.current.value,
-            debitedAt: new Date()
+            debitedAt: new Date(),
+            uid: user.uid,
         }
         try {
             await addIncomeItem(newIncome)
