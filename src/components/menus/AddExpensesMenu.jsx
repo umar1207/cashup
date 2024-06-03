@@ -93,7 +93,7 @@ function AddExpensesMenu({ show, onClose }) {
                                     setShowAddExpense(false)
                                 }} className='btn btn-danger'>Cancel</button>
                             </div>
-                            <div className='md:hidden flex flex-col gap-4'>
+                            <div className='md:hidden flex flex-col gap-4 p-4'>
                                 <div className='flex items-center justify-center gap-4'>
                                     <input type="text"
                                         placeholder='Search for a category'
