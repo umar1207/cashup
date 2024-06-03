@@ -52,7 +52,7 @@ function AddExpensesMenu({ show, onClose }) {
         const color = colorRef.current.value;
 
         try {
-            await addCategory({title, color, total: 0})
+            await addCategory({ title, color, total: 0 })
             setShowAddExpense(false)
         } catch {
             console.log('Error adding category');
@@ -78,20 +78,42 @@ function AddExpensesMenu({ show, onClose }) {
                     </div>
 
                     {showAddExpense && (
-                        <div className='flex items-center justify-between'>
-                            <input type="text"
-                                placeholder='Search for a category'
-                                className="py-2 bg-slate-200 rounded-3xl"
-                                ref={titleRef}
-                            />
+                        <>
+                            <div className='hidden md:flex items-center justify-between'>
+                                <input type="text"
+                                    placeholder='Search for a category'
+                                    className="py-2 bg-slate-200 rounded-3xl"
+                                    ref={titleRef}
+                                />
 
-                            <label>Pick a Color</label>
-                            <input type="color" className="w-24 h-10 py-2 px-4" ref={colorRef} />
-                            <button onClick={addCategoryHandler} className='btn btn-primary-outline'>Create</button>
-                            <button onClick={()=>{
-                                setShowAddExpense(false)
-                            }} className='btn btn-danger'>Cancel</button>
-                        </div>
+                                <label>Pick a Color</label>
+                                <input type="color" className="w-24 h-10 py-2 px-4" ref={colorRef} />
+                                <button onClick={addCategoryHandler} className='btn btn-primary-outline'>Create</button>
+                                <button onClick={() => {
+                                    setShowAddExpense(false)
+                                }} className='btn btn-danger'>Cancel</button>
+                            </div>
+                            <div className='md:hidden flex flex-col gap-4'>
+                                <div className='flex items-center justify-center gap-4'>
+                                    <input type="text"
+                                        placeholder='Search for a category'
+                                        className="py-2 bg-slate-200 rounded-3xl"
+                                        ref={titleRef}
+                                    />
+                                    <div className='flex items-center gap-2'>
+                                        <label>Pick Color</label>
+                                        <input type="color" className="w-20 h-10 py-2 px-4" ref={colorRef} />
+                                    </div>
+                                </div>
+                                <div className='flex gap-5 justify-center'>
+                                    <button onClick={addCategoryHandler} className='btn btn-primary-outline'>Create</button>
+                                    <button onClick={() => {
+                                        setShowAddExpense(false)
+                                    }} className='btn btn-danger'>Cancel</button>
+                                </div>
+                            </div>
+
+                        </>
                     )}
                     {expenses.map((expense) => {
                         return (
